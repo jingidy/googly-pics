@@ -14,6 +14,8 @@ import android.widget.GridView;
 import com.flukiness.googlypics.R;
 import com.flukiness.googlypics.adapters.ImageResultsAdapter;
 import com.flukiness.googlypics.models.ImageResult;
+import com.flukiness.googlypics.models.ImageSearchQuery;
+import com.flukiness.googlypics.utils.EndlessScrollingListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -26,11 +28,12 @@ import java.util.ArrayList;
 
 
 public class SearchActivity extends Activity {
-    private static final String searchUrlPrefix = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q=";
-
     private EditText etQuery;
     private GridView gvResults;
+
     private AsyncHttpClient client;
+    private ImageSearchQuery searchQuery;
+
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
 
@@ -41,6 +44,7 @@ public class SearchActivity extends Activity {
         setupViews();
 
         client = new AsyncHttpClient();
+        searchQuery = new ImageSearchQuery();
         imageResults = new ArrayList<ImageResult>();
         aImageResults = new ImageResultsAdapter(this, imageResults);
         gvResults.setAdapter(aImageResults);
@@ -67,8 +71,18 @@ public class SearchActivity extends Activity {
     }
 
     public void onImageSearch(View v) {
-        String query = etQuery.getText().toString();
-        client.get(searchUrlPrefix + query, new JsonHttpResponseHandler() {
+        searchQuery.resetQuery();
+        searchQuery.query = etQuery.getText().toString();
+        loadSearchResults(0);
+    }
+
+    private boolean loadSearchResults(final int offset) {
+        searchQuery.page = offset;
+        if (!searchQuery.validate()) {
+            return false;
+        }
+
+        client.get(searchQuery.toString(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("DEBUG", response.toString());
@@ -76,13 +90,13 @@ public class SearchActivity extends Activity {
                 JSONArray imageResultsJson;
                 try {
                     imageResultsJson = response.getJSONObject("responseData").getJSONArray("results");
-                    aImageResults.clear();
+                    if (offset == 0) {
+                        aImageResults.clear();
+                    }
                     aImageResults.addAll(ImageResult.fromJSONArray(imageResultsJson));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                Log.d("DEBUG", imageResults.toString());
             }
 
             @Override
@@ -90,6 +104,8 @@ public class SearchActivity extends Activity {
                 Log.e("ERROR", "JSON request failure: " + responseString, throwable);
             }
         });
+
+        return true;
     }
 
     private void setupViews() {
@@ -100,6 +116,12 @@ public class SearchActivity extends Activity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 ImageResult result = imageResults.get(i);
                 showFullImage(result);
+            }
+        });
+        gvResults.setOnScrollListener(new EndlessScrollingListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalCount) {
+                return loadSearchResults(page);
             }
         });
     }
