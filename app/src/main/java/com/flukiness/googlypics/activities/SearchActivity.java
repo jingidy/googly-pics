@@ -1,8 +1,8 @@
 package com.flukiness.googlypics.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +13,7 @@ import android.widget.GridView;
 
 import com.flukiness.googlypics.R;
 import com.flukiness.googlypics.adapters.ImageResultsAdapter;
+import com.flukiness.googlypics.fragments.SettingsFragment;
 import com.flukiness.googlypics.models.ImageResult;
 import com.flukiness.googlypics.models.ImageSearchQuery;
 import com.flukiness.googlypics.utils.EndlessScrollingListener;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends FragmentActivity {
     private EditText etQuery;
     private GridView gvResults;
 
@@ -65,6 +66,7 @@ public class SearchActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            showSettingsDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -130,5 +132,11 @@ public class SearchActivity extends Activity {
         Intent i = new Intent(this, ImageDisplayActivity.class);
         i.putExtra("url", imageResult.fullUrl);
         startActivity(i);
+    }
+
+    private void showSettingsDialog() {
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        SettingsFragment settingsDialog = SettingsFragment.newInstance();
+        settingsDialog.show(fm, "fragment_settings");
     }
 }

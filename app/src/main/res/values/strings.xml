@@ -2,10 +2,23 @@
 <resources>
 
     <string name="app_name">Googly Pics</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Options</string>
     <string name="search_prompt">Enter search query</string>
     <string name="search_label">Search</string>
     <string name="title_activity_image_display">Full Image</string>
+    <string name="size_label">Size</string>
+    <string name="color_label">Color</string>
+    <string name="site_label">Site</string>
+    <string name="type_label">Type</string>
+    <string name="small_label">Small</string>
+    <string name="medium_label">Medium</string>
+    <string name="large_label">Large</string>
+    <string name="huge_label">Huge</string>
+    <string name="face_label">Face</string>
+    <string name="photo_label">Photo</string>
+    <string name="clipart_label">Clipart</string>
+    <string name="lineart_label">Line Art</string>
+    <string name="enter_url_hint">Enter URL</string>
+    <string name="ok_label">OK</string>
 
 </resources>
