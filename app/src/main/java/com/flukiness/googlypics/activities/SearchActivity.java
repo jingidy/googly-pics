@@ -28,7 +28,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class SearchActivity extends FragmentActivity {
+public class SearchActivity extends FragmentActivity implements SettingsFragment.SettingsFragmentListener {
     private EditText etQuery;
     private GridView gvResults;
 
@@ -136,7 +136,15 @@ public class SearchActivity extends FragmentActivity {
 
     private void showSettingsDialog() {
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-        SettingsFragment settingsDialog = SettingsFragment.newInstance();
+        SettingsFragment settingsDialog = SettingsFragment.newInstance(searchQuery);
         settingsDialog.show(fm, "fragment_settings");
+    }
+
+    @Override
+    public void onSettingsFinish(ImageSearchQuery newQuery) {
+        if (!searchQuery.isEqual(newQuery)) {
+            searchQuery = newQuery;
+            loadSearchResults(0);
+        }
     }
 }

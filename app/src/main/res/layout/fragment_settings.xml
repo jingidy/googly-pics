@@ -15,7 +15,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/rgSize">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -57,73 +58,104 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/rgColor">
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ff000000"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnBlack" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ffa2a2a2"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnGray" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ffffffff"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnWhite" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ff0fa0ff"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnBlue" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ff42d0ab"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnTeal" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ff99e74e"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnGreen" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#d3fff118"
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnYellow" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ffffafc5"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnPink" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ff722ea3"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnPurple" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ccdc2a27"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnRed" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#ffff9247"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnOrange" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#d3492312"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:checked="false"
+            android:id="@+id/rbtnBrown" />
 
     </RadioGroup>
 
@@ -138,7 +170,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/rgType">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -180,7 +213,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etSiteFilter"
-        android:hint="@string/enter_url_hint"/>
+        android:hint="@string/enter_url_hint"
+        android:singleLine="true" />
 
     <Button
         android:layout_width="fill_parent"
