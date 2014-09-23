@@ -3,6 +3,7 @@ package com.flukiness.googlypics.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.SearchView;
 
 import com.flukiness.googlypics.R;
 import com.flukiness.googlypics.adapters.ImageResultsAdapter;
@@ -56,6 +58,24 @@ public class SearchActivity extends FragmentActivity implements SettingsFragment
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.search, menu);
+
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView)searchItem.getActionView();
+        searchItem.expandActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                searchView.clearFocus();
+                onImageSearch(s);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -72,9 +92,9 @@ public class SearchActivity extends FragmentActivity implements SettingsFragment
         return super.onOptionsItemSelected(item);
     }
 
-    public void onImageSearch(View v) {
+    public void onImageSearch(String query) {
         searchQuery.resetQuery();
-        searchQuery.query = etQuery.getText().toString();
+        searchQuery.query = query;
         loadSearchResults(0);
     }
 
@@ -111,7 +131,6 @@ public class SearchActivity extends FragmentActivity implements SettingsFragment
     }
 
     private void setupViews() {
-        etQuery = (EditText) findViewById(R.id.etQuery);
         gvResults = (GridView) findViewById(R.id.gvResults);
         gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

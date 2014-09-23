@@ -24,7 +24,7 @@ Time taken: 8hr
 ## Optional
 
 - [ ] Robust error handling, check if internet is available, handle error cases, network failures
-- [ ] Use the ActionBar SearchView or custom layout as the query box instead of an EditText
+- [x] Use the ActionBar SearchView or custom layout as the query box instead of an EditText
 - [ ] User can share an image to their friends or email it to themselves
 - [x] Replace filter settings activity with a lightweight modal overlay
 - [ ] Improve the user interface and experiment with image assets and/or styling and coloring
