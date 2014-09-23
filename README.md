@@ -3,7 +3,7 @@ Googly Pics
 
 Codepath project: Google Image Search
 
-Time taken: 8hr
+Time taken: 13 hours
 
 # Completed User Stories
 
@@ -27,7 +27,7 @@ Time taken: 8hr
 - [x] Use the ActionBar SearchView or custom layout as the query box instead of an EditText
 - [ ] User can share an image to their friends or email it to themselves
 - [x] Replace filter settings activity with a lightweight modal overlay
-- [ ] Improve the user interface and experiment with image assets and/or styling and coloring
+- [x] Improve the user interface and experiment with image assets and/or styling and coloring
 - [ ] Use the StaggeredGridView to improve the grid of image results
 - [ ] User can zoom or pan images displayed in full-screen detail view
 
