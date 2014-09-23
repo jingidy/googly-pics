@@ -31,6 +31,8 @@ import java.util.ArrayList;
 
 
 public class SearchActivity extends FragmentActivity implements SettingsFragment.SettingsFragmentListener {
+    public static final String IMAGE_RESULT_PARAM = "result";
+
     private EditText etQuery;
     private GridView gvResults;
 
@@ -149,7 +151,7 @@ public class SearchActivity extends FragmentActivity implements SettingsFragment
 
     private void showFullImage(ImageResult imageResult) {
         Intent i = new Intent(this, ImageDisplayActivity.class);
-        i.putExtra("url", imageResult.fullUrl);
+        i.putExtra(IMAGE_RESULT_PARAM, imageResult);
         startActivity(i);
     }
 

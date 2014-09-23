@@ -2,11 +2,14 @@ package com.flukiness.googlypics.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.flukiness.googlypics.R;
+import com.flukiness.googlypics.models.ImageResult;
 import com.squareup.picasso.Picasso;
 
 public class ImageDisplayActivity extends Activity {
@@ -17,9 +20,11 @@ public class ImageDisplayActivity extends Activity {
         setContentView(R.layout.activity_image_display);
         getActionBar().hide();
 
-        String url = getIntent().getStringExtra("url");
+        ImageResult result = getIntent().getParcelableExtra(SearchActivity.IMAGE_RESULT_PARAM);
         ImageView ivFullImage = (ImageView) findViewById(R.id.ivFullImage);
-        Picasso.with(this).load(url).into(ivFullImage);
+        Picasso.with(this).load(result.fullUrl).into(ivFullImage);
+        TextView tvFullTitle = (TextView)findViewById(R.id.tvFullTitle);
+        tvFullTitle.setText(Html.fromHtml(result.title));
     }
 
 
