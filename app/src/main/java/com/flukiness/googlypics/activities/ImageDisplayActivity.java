@@ -31,11 +31,13 @@ public class ImageDisplayActivity extends Activity {
         Picasso.with(this).load(result.fullUrl).into(ivFullImage, new Callback() {
             @Override
             public void onSuccess() {
+                progressBar.setIndeterminate(false);
                 progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onError() {
+                progressBar.setIndeterminate(false);
                 progressBar.setVisibility(View.GONE);
                 Log.e("ERROR", "Could not load full-sized image at" + result.fullUrl);
             }
