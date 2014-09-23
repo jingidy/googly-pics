@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -16,7 +17,7 @@ import com.flukiness.googlypics.models.ImageSearchQuery;
 /**
  * Created by Jing Jin on 9/21/14.
  */
-public class SettingsFragment extends DialogFragment {
+public class SettingsFragment extends DialogFragment implements CompoundButton.OnCheckedChangeListener {
 
     public interface SettingsFragmentListener {
         void onSettingsFinish(ImageSearchQuery newQuery);
@@ -56,65 +57,97 @@ public class SettingsFragment extends DialogFragment {
         return view;
     }
 
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        View viewToToggle = null;
+        if (compoundButton == switchSize) {
+            viewToToggle = rgSize;
+        } else if (compoundButton == switchColor) {
+            viewToToggle = rgColor;
+        } else if (compoundButton == switchType) {
+            viewToToggle = rgType;
+        } else if (compoundButton == switchSite) {
+            viewToToggle = etSiteFilter;
+        }
+
+        if (viewToToggle != null) {
+            viewToToggle.setVisibility(compoundButton.isChecked() ? View.VISIBLE : View.GONE);
+        }
+    }
+
+    private void setTogglableGroupVisibility(Switch switchView, View toggleView, int visibility) {
+        switchView.setChecked(visibility == View.VISIBLE);
+        toggleView.setVisibility(visibility);
+    }
+
     public void saveAndDismiss() {
-        switch(rgSize.getCheckedRadioButtonId()) {
-            case R.id.rbtnSmall:
-                searchQuery.size = ImageSearchQuery.SIZE.icon;
-                break;
-            case R.id.rbtnMedium:
-                searchQuery.size = ImageSearchQuery.SIZE.medium;
-                break;
-            case R.id.rbtnLarge:
-                searchQuery.size = ImageSearchQuery.SIZE.xxlarge;
-                break;
-            case R.id.rbtnHuge:
-                searchQuery.size = ImageSearchQuery.SIZE.huge;
-                break;
-            default:
-                searchQuery.size = null;
+        if (switchSize.isChecked()) {
+            switch (rgSize.getCheckedRadioButtonId()) {
+                case R.id.rbtnSmall:
+                    searchQuery.size = ImageSearchQuery.SIZE.icon;
+                    break;
+                case R.id.rbtnMedium:
+                    searchQuery.size = ImageSearchQuery.SIZE.medium;
+                    break;
+                case R.id.rbtnLarge:
+                    searchQuery.size = ImageSearchQuery.SIZE.xxlarge;
+                    break;
+                case R.id.rbtnHuge:
+                    searchQuery.size = ImageSearchQuery.SIZE.huge;
+                    break;
+                default:
+                    searchQuery.size = null;
+            }
+        } else {
+            searchQuery.size = null;
         }
 
-        switch(rgColor.getCheckedRadioButtonId()) {
-            case R.id.rbtnBlack:
-                searchQuery.color = ImageSearchQuery.COLOR.black;
-                break;
-            case R.id.rbtnGray:
-                searchQuery.color = ImageSearchQuery.COLOR.gray;
-                break;
-            case R.id.rbtnWhite:
-                searchQuery.color = ImageSearchQuery.COLOR.white;
-                break;
-            case R.id.rbtnBlue:
-                searchQuery.color = ImageSearchQuery.COLOR.blue;
-                break;
-            case R.id.rbtnTeal:
-                searchQuery.color = ImageSearchQuery.COLOR.teal;
-                break;
-            case R.id.rbtnGreen:
-                searchQuery.color = ImageSearchQuery.COLOR.green;
-                break;
-            case R.id.rbtnYellow:
-                searchQuery.color = ImageSearchQuery.COLOR.yellow;
-                break;
-            case R.id.rbtnPink:
-                searchQuery.color = ImageSearchQuery.COLOR.pink;
-                break;
-            case R.id.rbtnPurple:
-                searchQuery.color = ImageSearchQuery.COLOR.purple;
-                break;
-            case R.id.rbtnRed:
-                searchQuery.color = ImageSearchQuery.COLOR.red;
-                break;
-            case R.id.rbtnOrange:
-                searchQuery.color = ImageSearchQuery.COLOR.orange;
-                break;
-            case R.id.rbtnBrown:
-                searchQuery.color = ImageSearchQuery.COLOR.brown;
-                break;
-            default:
-                searchQuery.color = null;
+        if (switchColor.isChecked()) {
+            switch (rgColor.getCheckedRadioButtonId()) {
+                case R.id.rbtnBlack:
+                    searchQuery.color = ImageSearchQuery.COLOR.black;
+                    break;
+                case R.id.rbtnGray:
+                    searchQuery.color = ImageSearchQuery.COLOR.gray;
+                    break;
+                case R.id.rbtnWhite:
+                    searchQuery.color = ImageSearchQuery.COLOR.white;
+                    break;
+                case R.id.rbtnBlue:
+                    searchQuery.color = ImageSearchQuery.COLOR.blue;
+                    break;
+                case R.id.rbtnTeal:
+                    searchQuery.color = ImageSearchQuery.COLOR.teal;
+                    break;
+                case R.id.rbtnGreen:
+                    searchQuery.color = ImageSearchQuery.COLOR.green;
+                    break;
+                case R.id.rbtnYellow:
+                    searchQuery.color = ImageSearchQuery.COLOR.yellow;
+                    break;
+                case R.id.rbtnPink:
+                    searchQuery.color = ImageSearchQuery.COLOR.pink;
+                    break;
+                case R.id.rbtnPurple:
+                    searchQuery.color = ImageSearchQuery.COLOR.purple;
+                    break;
+                case R.id.rbtnRed:
+                    searchQuery.color = ImageSearchQuery.COLOR.red;
+                    break;
+                case R.id.rbtnOrange:
+                    searchQuery.color = ImageSearchQuery.COLOR.orange;
+                    break;
+                case R.id.rbtnBrown:
+                    searchQuery.color = ImageSearchQuery.COLOR.brown;
+                    break;
+                default:
+                    searchQuery.color = null;
+            }
+        } else {
+            searchQuery.color = null;
         }
 
+        if (switchType.isChecked())
         switch(rgType.getCheckedRadioButtonId()) {
             case R.id.rbtnFace:
                 searchQuery.type = ImageSearchQuery.TYPE.face;
@@ -129,11 +162,17 @@ public class SettingsFragment extends DialogFragment {
                 searchQuery.type = ImageSearchQuery.TYPE.lineart;
                 break;
             default:
-                searchQuery.color = null;
+                searchQuery.type = null;
+        } else {
+            searchQuery.type = null;
         }
 
-        String siteFilter = etSiteFilter.getText().toString().trim();
-        searchQuery.site = siteFilter.isEmpty() ? null : siteFilter;
+        if (switchSite.isChecked()) {
+            String siteFilter = etSiteFilter.getText().toString().trim();
+            searchQuery.site = siteFilter.isEmpty() ? null : siteFilter;
+        } else {
+            searchQuery.site = null;
+        }
 
         SettingsFragmentListener listener = (SettingsFragmentListener)getActivity();
         listener.onSettingsFinish(searchQuery);
@@ -142,12 +181,16 @@ public class SettingsFragment extends DialogFragment {
 
     private void setUpViews(View container) {
         switchSize = (Switch)container.findViewById(R.id.switchSize);
+        switchSize.setOnCheckedChangeListener(this);
         rgSize = (RadioGroup)container.findViewById(R.id.rgSize);
         switchColor = (Switch)container.findViewById(R.id.switchColor);
+        switchColor.setOnCheckedChangeListener(this);
         rgColor = (RadioGroup)container.findViewById(R.id.rgColor);
         switchType = (Switch)container.findViewById(R.id.switchType);
+        switchType.setOnCheckedChangeListener(this);
         rgType = (RadioGroup)container.findViewById(R.id.rgType);
         switchSite = (Switch)container.findViewById(R.id.switchSite);
+        switchSite.setOnCheckedChangeListener(this);
         etSiteFilter = (EditText)container.findViewById(R.id.etSiteFilter);
 
         Button btnSettingsOk = (Button) container.findViewById(R.id.btnSettingsOk);
@@ -173,6 +216,8 @@ public class SettingsFragment extends DialogFragment {
                     rgSize.check(R.id.rbtnHuge);
                     break;
             }
+        } else {
+            setTogglableGroupVisibility(switchSize, rgSize, View.GONE);
         }
 
         if (searchQuery.color != null) {
@@ -214,6 +259,8 @@ public class SettingsFragment extends DialogFragment {
                     rgColor.check(R.id.rbtnYellow);
                     break;
             }
+        } else {
+            setTogglableGroupVisibility(switchColor, rgColor, View.GONE);
         }
 
         if (searchQuery.type != null) {
@@ -231,10 +278,14 @@ public class SettingsFragment extends DialogFragment {
                     rgType.check(R.id.rbtnLineart);
                     break;
             }
+        } else {
+            setTogglableGroupVisibility(switchType, rgType, View.GONE);
         }
 
         if (searchQuery.site != null && !searchQuery.site.isEmpty()) {
             etSiteFilter.setText(searchQuery.site);
+        } else {
+            setTogglableGroupVisibility(switchSite, etSiteFilter, View.GONE);
         }
     }
 }

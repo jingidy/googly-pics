@@ -9,7 +9,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/switchSize"
         android:background="#ffd4ede8"
-        android:text="@string/size_label" />
+        android:text="@string/size_label"
+        android:checked="true"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
 
     <RadioGroup
         android:layout_width="fill_parent"
@@ -52,14 +56,20 @@
         android:layout_height="wrap_content"
         android:text="@string/color_label"
         android:id="@+id/switchColor"
-        android:background="#ffd4ede8" />
+        android:background="#ffd4ede8"
+        android:checked="true"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="1dp"/>
 
     <RadioGroup
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
-        android:id="@+id/rgColor">
+        android:id="@+id/rgColor"
+        android:paddingBottom="5dp">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -164,7 +174,12 @@
         android:layout_height="wrap_content"
         android:text="@string/type_label"
         android:id="@+id/switchType"
-        android:background="#ffd4ede8" />
+        android:background="#ffd4ede8"
+        android:checked="true"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="1dp" />
 
     <RadioGroup
         android:layout_width="fill_parent"
@@ -207,7 +222,12 @@
         android:layout_height="wrap_content"
         android:text="@string/site_label"
         android:id="@+id/switchSite"
-        android:background="#ffd4ede8" />
+        android:background="#ffd4ede8"
+        android:checked="true"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="1dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -221,5 +241,7 @@
         android:layout_height="wrap_content"
         android:text="@string/ok_label"
         android:id="@+id/btnSettingsOk"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/holo_blue_dark"
+        android:background="#fffbfbfb" />
 </LinearLayout>
