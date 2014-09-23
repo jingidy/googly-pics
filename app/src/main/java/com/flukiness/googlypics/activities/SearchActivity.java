@@ -41,6 +41,7 @@ public class SearchActivity extends FragmentActivity implements SettingsFragment
 
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,7 @@ public class SearchActivity extends FragmentActivity implements SettingsFragment
         getMenuInflater().inflate(R.menu.search, menu);
 
         final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView)searchItem.getActionView();
+        searchView = (SearchView)searchItem.getActionView();
         searchItem.expandActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -106,17 +107,16 @@ public class SearchActivity extends FragmentActivity implements SettingsFragment
             return false;
         }
 
+        if (offset == 0) {
+            aImageResults.clear();
+        }
+
         client.get(searchQuery.toString(), new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("DEBUG", response.toString());
-
                 JSONArray imageResultsJson;
                 try {
                     imageResultsJson = response.getJSONObject("responseData").getJSONArray("results");
-                    if (offset == 0) {
-                        aImageResults.clear();
-                    }
                     aImageResults.addAll(ImageResult.fromJSONArray(imageResultsJson));
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -165,7 +165,9 @@ public class SearchActivity extends FragmentActivity implements SettingsFragment
     public void onSettingsFinish(ImageSearchQuery newQuery) {
         if (!searchQuery.isEqual(newQuery)) {
             searchQuery = newQuery;
+            searchQuery.page = 0;
             loadSearchResults(0);
         }
+        searchView.clearFocus();
     }
 }
