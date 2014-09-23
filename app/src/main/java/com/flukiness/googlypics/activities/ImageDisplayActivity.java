@@ -3,13 +3,18 @@ package com.flukiness.googlypics.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.flukiness.googlypics.R;
 import com.flukiness.googlypics.models.ImageResult;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 public class ImageDisplayActivity extends Activity {
@@ -20,9 +25,21 @@ public class ImageDisplayActivity extends Activity {
         setContentView(R.layout.activity_image_display);
         getActionBar().hide();
 
-        ImageResult result = getIntent().getParcelableExtra(SearchActivity.IMAGE_RESULT_PARAM);
+        final ImageResult result = getIntent().getParcelableExtra(SearchActivity.IMAGE_RESULT_PARAM);
         ImageView ivFullImage = (ImageView) findViewById(R.id.ivFullImage);
-        Picasso.with(this).load(result.fullUrl).into(ivFullImage);
+        final ProgressBar progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        Picasso.with(this).load(result.fullUrl).into(ivFullImage, new Callback() {
+            @Override
+            public void onSuccess() {
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {
+                progressBar.setVisibility(View.GONE);
+                Log.e("ERROR", "Could not load full-sized image at" + result.fullUrl);
+            }
+        });
         TextView tvFullTitle = (TextView)findViewById(R.id.tvFullTitle);
         tvFullTitle.setText(Html.fromHtml(result.title));
     }
