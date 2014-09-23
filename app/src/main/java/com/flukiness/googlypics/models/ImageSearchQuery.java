@@ -3,8 +3,6 @@ package com.flukiness.googlypics.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 /**
  * Created by Jing Jin on 9/21/14.
  */
@@ -77,10 +75,6 @@ public class ImageSearchQuery implements Parcelable {
         page = 0;
     }
 
-    public void resetSettings() {
-        numPerPage = MAX_NUM_PER_PAGE;
-    }
-
     public boolean validate() {
         if (query == null || query.isEmpty())
             return false;
@@ -94,12 +88,8 @@ public class ImageSearchQuery implements Parcelable {
 
     public boolean isEqual(ImageSearchQuery q) {
         // Note that we don't compare the current page since that is dynamic even for the same search.
-        if (numPerPage == q.numPerPage && query == q.query && size == q.size && color == q.color &&
-                type == q.type && site == q.site) {
-            return true;
-        }
-
-        return false;
+        return (numPerPage == q.numPerPage && query == q.query && size == q.size && color == q.color &&
+                type == q.type && site == q.site);
     }
 
     @Override

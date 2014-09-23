@@ -3,7 +3,6 @@ package com.flukiness.googlypics.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +32,6 @@ import java.util.ArrayList;
 public class SearchActivity extends FragmentActivity implements SettingsFragment.SettingsFragmentListener {
     public static final String IMAGE_RESULT_PARAM = "result";
 
-    private EditText etQuery;
     private GridView gvResults;
 
     private AsyncHttpClient client;

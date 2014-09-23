@@ -1,6 +1,5 @@
 package com.flukiness.googlypics.utils;
 
-import android.app.Activity;
 import android.widget.AbsListView;
 
 /**
@@ -24,7 +23,7 @@ public abstract class EndlessScrollingListener implements AbsListView.OnScrollLi
     public EndlessScrollingListener(int visibleThreshold, int startPage) {
         this.visibleThreshold = visibleThreshold;
         this.startingPageIndex = startPage;
-        this.currentPage = currentPage;
+        this.currentPage = startPage;
     }
 
     @Override
