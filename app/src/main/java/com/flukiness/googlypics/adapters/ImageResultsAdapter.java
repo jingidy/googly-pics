@@ -20,6 +20,10 @@ import java.util.List;
  */
 public class ImageResultsAdapter extends ArrayAdapter<ImageResult> {
 
+    public static class ViewHolder {
+        ImageView ivImage;
+    }
+
     public ImageResultsAdapter(Context context, List<ImageResult> images) {
         super(context, R.layout.item_image_result, images);
     }
@@ -28,14 +32,18 @@ public class ImageResultsAdapter extends ArrayAdapter<ImageResult> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageResult imageResult = getItem(position);
 
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_image_result, parent, false);
+            viewHolder = new ViewHolder();
+            viewHolder.ivImage = (ImageView) convertView.findViewById(R.id.ivImage);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        ImageView ivImage = (ImageView) convertView.findViewById(R.id.ivImage);
-
-        ivImage.setImageResource(0);
-        Picasso.with(getContext()).load(imageResult.thumbUrl).into(ivImage);
+        viewHolder.ivImage.setImageResource(0);
+        Picasso.with(getContext()).load(imageResult.thumbUrl).into(viewHolder.ivImage);
 
         return convertView;
     }

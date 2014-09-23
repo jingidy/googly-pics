@@ -86,7 +86,7 @@ public class ImageSearchQuery implements Parcelable {
             return false;
         if (numPerPage > MAX_NUM_PER_PAGE)
             return false;
-        if (page > MAX_PAGES)
+        if (page >= MAX_PAGES)
             return false;
 
         return true;
